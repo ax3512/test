@@ -4,151 +4,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google</title>
+    <title>API 데이터 검색</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding-top: 100px;
+            background-color: #f7f7f7;
+            padding: 20px;
         }
-        .google-logo img {
-            width: 272px;
-            height: 92px;
-        }
-        .search-container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .search-bar {
-            width: 100%;
-            height: 44px;
-            padding: 0 16px;
-            border: 1px solid #dfe1e5;
-            border-radius: 24px;
-            box-shadow: none;
+        input, button {
+            margin: 5px 0;
+            padding: 10px;
             font-size: 16px;
-            outline: none;
         }
-        .search-buttons {
+        #result {
             margin-top: 20px;
-            text-align: center;
-        }
-        .search-button {
-            padding: 10px 20px;
-            margin: 0 4px;
-            background-color: #f8f9fa;
-            border: 1px solid #f8f9fa;
-            border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .search-button:hover {
-            background-color: #f1f3f4;
-            border-color: #f1f3f4;
-        }
-        .results-container {
-            display: none;
-            width: 100%;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 16px;
-        }
-        .result {
-            border-bottom: 1px solid #dfe1e5;
-            padding: 12px 0;
-        }
-        .result:last-child {
-            border-bottom: none;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
-    <div class="google-logo">
-        <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
-    </div>
-    <div class="search-container">
-        <input type="text" id="search-bar" class="search-bar" placeholder="Google 검색 또는 URL 입력">
-        <div class="search-buttons">
-            <button id="search-button" class="search-button">Google 검색</button>
-            <button class="search-button">I'm Feeling Lucky</button>
-        </div>
-    </div>
-    <div id="results-container" class="results-container">
-        <!-- 챗봇 결과가 이곳에 표시됩니다. -->
-    </div>
-
-    <!-- 챗봇 스크립트 추가 -->
-    <script id="58HvPbwaoyWFuntQ">
-    if( !window.aionChatbotConfig ) {
-        window.aionChatbotConfig = []
-    }
-    window.aionChatbotConfig['58HvPbwaoyWFuntQ'] = { 
-     token: '58HvPbwaoyWFuntQ', 
-     baseUrl: 'https://aionu.edu-tech.io',
-    }
-    </script>
-    <script
-     src="https://aionu.edu-tech.io/embed_div.min.js"
-     defer>
-    </script>
+    <h1>API 데이터 검색</h1>
+    <input type="text" id="searchQuery" placeholder="검색어를 입력하세요">
+    <button onclick="search()">Google 검색</button>
+    <div id="result"></div>
 
     <script>
-        const searchBar = document.getElementById('search-bar');
-        const searchButton = document.getElementById('search-button');
-        const resultsContainer = document.getElementById('results-container');
+        async function fetchDataFromAPI(question) {
+            const url = 'https://api.aionu.edu-tech.io/v1/chat-messages';
+            const headers = {
+                'Authorization': 'Bearer app-JQJNXqQ1jgIzxiLk1YjnulmO',
+                'Content-Type': 'application/json'
+            };
+            const data = {
+                "inputs": {},
+                "query": question,
+                "response_mode": "blocking",
+                "conversation_id": "",
+                "user": "sung-kyu.lee@kt.com"
+            };
 
-        function showChatbotResults() {
-            const query = searchBar.value.trim();
-            if (query) {
-                // Display the results container
-                resultsContainer.style.display = 'block';
-                resultsContainer.innerHTML = ''; // Clear previous results
-
-                // 챗봇을 통해 결과를 얻음
-                const chatbotURL = `${window.aionChatbotConfig['58HvPbwaoyWFuntQ'].baseUrl}/chatbot_response`;
-
-                fetch(chatbotURL, {
+            try {
+                const response = await fetch(url, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${window.aionChatbotConfig['58HvPbwaoyWFuntQ'].token}`
-                    },
-                    body: JSON.stringify({ query: query })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Display chatbot results
-                    if (data.results) {
-                        data.results.forEach(result => {
-                            const resultDiv = document.createElement('div');
-                            resultDiv.classList.add('result');
-                            resultDiv.textContent = result.text;
-                            resultsContainer.appendChild(resultDiv);
-                        });
-                    } else {
-                        const noResultDiv = document.createElement('div');
-                        noResultDiv.classList.add('result');
-                        noResultDiv.textContent = "No results found.";
-                        resultsContainer.appendChild(noResultDiv);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
+                    headers: headers,
+                    body: JSON.stringify(data)
                 });
 
-                // 임베디드된 챗봇 열기
-                window.aionChatbotConfigFunction.openEmbedChatbot('58HvPbwaoyWFuntQ');
+                if (response.status === 200) {
+                    const content = await response.json();
+                    console.log("API 호출 성공: ", content);
+                    return content;
+                } else {
+                    console.log("API 호출 실패, 상태 코드: ", response.status);
+                    return null;
+                }
+            } catch (error) {
+                console.error("API 호출 오류: ", error);
+                return null;
             }
         }
 
-        searchBar.addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
-                showChatbotResults();
+        async function search() {
+            const query = document.getElementById('searchQuery').value;
+            if (!query) {
+                alert("검색어를 입력하세요.");
+                return;
             }
-        });
 
-        searchButton.addEventListener('click', showChatbotResults);
+            const data = await fetchDataFromAPI(query);
+            const resultContainer = document.getElementById('result');
+            resultContainer.innerHTML = '';
+
+            if (data) {
+                // data 내용에 따라서 결과를 기사 형식으로 렌더링
+                const article = document.createElement('article');
+                const title = document.createElement('h2');
+                const content = document.createElement('p');
+
+                title.innerText = "검색 결과:";
+                content.innerText = JSON.stringify(data, null, 2); // API 결과를 예쁘게 JSON 형식으로 출력
+
+                article.appendChild(title);
+                article.appendChild(content);
+                resultContainer.appendChild(article);
+            } else {
+                resultContainer.innerText = "검색 결과를 불러오는 데 실패했습니다.";
+            }
+        }
     </script>
 </body>
 </html>
