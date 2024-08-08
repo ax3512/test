@@ -112,32 +112,15 @@
         .footer a:hover {
             text-decoration: underline;
         }
-        .chatbot-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #4285f4;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        #chatbot-container {
-            width: 400px;
-            height: 500px;
+        .chatbot-container {
+            width: 100%;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            padding: 14px;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            background-color: #fff;
             display: none;
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            z-index: 9999;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            background-color: white;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -150,7 +133,7 @@
             <input type="text" placeholder="Google 검색 또는 URL 입력">
         </div>
         <div class="buttons">
-            <button class="btn">Google 검색</button>
+            <button class="btn" onclick="toggleChatbot()">Google 검색</button>
             <button class="btn">I'm Feeling Lucky</button>
         </div>
     </div>
@@ -179,24 +162,25 @@
                 <div class="description">An example is a representative form or pattern that can be used to illustrate a particular phenomenon or concept.</div>
             </div>
         </div>
+        <div class="result-item chatbot-container" id="chatbot-container">
+            <div>
+                <script id="58HvPbwaoyWFuntQ">
+                    if( !window.aionChatbotConfig ) {
+                        window.aionChatbotConfig = new Array()
+                    }
+                    window.aionChatbotConfig['58HvPbwaoyWFuntQ'] = { 
+                        token: '58HvPbwaoyWFuntQ', 
+                        baseUrl: 'https://aionu.edu-tech.io',
+                    }
+                </script>
+                <script
+                    src="https://aionu.edu-tech.io/embed_div.min.js"
+                    onload="window.aionChatbotConfigFunction.openEmbedChatbot('58HvPbwaoyWFuntQ')"
+                    defer>
+                </script>
+            </div>
+        </div>
     </div>
-    <div id="chatbot-container">
-        <script id="58HvPbwaoyWFuntQ">
-            if( !window.aionChatbotConfig ) {
-                window.aionChatbotConfig = new Array()
-            }
-            window.aionChatbotConfig['58HvPbwaoyWFuntQ'] = { 
-                token: '58HvPbwaoyWFuntQ', 
-                baseUrl: 'https://aionu.edu-tech.io',
-            }
-        </script>
-        <script
-            src="https://aionu.edu-tech.io/embed_div.min.js"
-            onload="window.aionChatbotConfigFunction.openEmbedChatbot('58HvPbwaoyWFuntQ')"
-            defer>
-        </script>
-    </div>
-    <button class="chatbot-button" onclick="toggleChatbot()">💬</button>
     <div class="footer">
         <a href="#">광고</a>
         <a href="#">비즈니스</a>
