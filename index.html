@@ -9,33 +9,34 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
             background-color: #f2f2f2;
         }
         .container {
+            width: 100%;
+            max-width: 584px;
             text-align: center;
-            background-color: white;
-            padding: 50px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
         }
         .logo {
-            width: 272px;
+            max-width: 272px;
         }
         .search-bar {
             display: flex;
             justify-content: center;
-            margin: 20px 0;
+            margin-top: 20px;
+            height: 44px;
         }
         .search-bar input {
-            width: 80%;
-            padding: 10px;
+            width: 100%;
+            max-width: 484px;
+            padding: 0 14px;
             font-size: 18px;
             border: 1px solid #dfe1e5;
-            border-radius: 24px;
+            border-radius: 24px 0 0 24px;
             outline: none;
             box-shadow: none;
         }
@@ -43,22 +44,45 @@
             border: 1px solid #4285f4;
         }
         .search-bar button {
-            padding: 10px 20px;
-            margin-left: 10px;
-            font-size: 18px;
+            padding: 0 18px;
+            font-size: 14px;
             border: none;
-            border-radius: 24px;
+            border-radius: 0 24px 24px 0;
             background-color: #4285f4;
             color: white;
             cursor: pointer;
             outline: none;
         }
-        #result {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ddd;
+        .search-bar button:hover {
+            background-color: #357ae8;
+        }
+        .results-container {
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
             border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            padding: 20px;
+        }
+        .article {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .article:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .article h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #1a0dab;
+        }
+        .article p {
+            margin: 10px 0 0 0;
+            color: #4d5156;
         }
     </style>
 </head>
@@ -66,10 +90,10 @@
     <div class="container">
         <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google 로고" class="logo">
         <div class="search-bar">
-            <input type="text" id="searchQuery" placeholder="Google 검색 또는 URL 입력" onkeypress="handleKeyPress(event)">
+            <input type="text" id="searchQuery" placeholder="Google 검색" onkeypress="handleKeyPress(event)">
             <button onclick="search()">Google 검색</button>
         </div>
-        <div id="result"></div>
+        <div id="result" class="results-container"></div>
     </div>
 
     <script>
@@ -125,21 +149,27 @@
             const resultContainer = document.getElementById('result');
             resultContainer.innerHTML = '';
 
-            if (data) {
-                // data 내용에 따라서 결과를 기사 형식으로 렌더링
-                const article = document.createElement('article');
-                const title = document.createElement('h2');
-                const content = document.createElement('p');
-
-                title.innerText = "검색 결과:";
-                content.innerText = JSON.stringify(data, null, 2); // API 결과를 예쁘게 JSON 형식으로 출력
-
-                article.appendChild(title);
-                article.appendChild(content);
-                resultContainer.appendChild(article);
+            if (data && data.answers) {  // 데이터 내에 'answers' 항목이 있다고 가정
+                // data.answers에서 답변을 추출하여 렌더링
+                renderAnswers(data.answers);
             } else {
                 resultContainer.innerText = "검색 결과를 불러오는 데 실패했습니다.";
             }
+        }
+
+        function renderAnswers(answers) {
+            const resultContainer = document.getElementById('result');
+
+            answers.forEach(answer => {
+                const articleElement = document.createElement('div');
+                articleElement.className = 'article';
+
+                const contentElement = document.createElement('p');
+                contentElement.innerText = answer; // 단순히 답변 텍스트를 출력
+
+                articleElement.appendChild(contentElement);
+                resultContainer.appendChild(articleElement);
+            });
         }
     </script>
 </body>
