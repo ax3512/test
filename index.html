@@ -90,7 +90,6 @@
     </script>
     <script
      src="https://aionu.edu-tech.io/embed_div.min.js"
-     onload="window.aionChatbotConfigFunction.openEmbedChatbot('58HvPbwaoyWFuntQ')"
      defer>
     </script>
 
@@ -106,8 +105,10 @@
                 resultsContainer.style.display = 'block';
                 resultsContainer.innerHTML = ''; // Clear previous results
 
-                // 임베디드된 챗봇을 통해 결과를 얻음
-                fetch(`${window.aionChatbotConfig['58HvPbwaoyWFuntQ'].baseUrl}/chatbot_response`, {
+                // 챗봇을 통해 결과를 얻음
+                const chatbotURL = `${window.aionChatbotConfig['58HvPbwaoyWFuntQ'].baseUrl}/chatbot_response`;
+
+                fetch(chatbotURL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -135,6 +136,9 @@
                 .catch(error => {
                     console.error('Error:', error);
                 });
+
+                // 임베디드된 챗봇 열기
+                window.aionChatbotConfigFunction.openEmbedChatbot('58HvPbwaoyWFuntQ');
             }
         }
 
