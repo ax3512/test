@@ -11,8 +11,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            padding-top: 100px;
             margin: 0;
         }
         .google-logo img {
@@ -20,14 +19,14 @@
             height: 92px;
         }
         .search-container {
-            width: 50%;
+            width: 100%;
+            max-width: 600px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
         .search-bar {
             width: 100%;
-            max-width: 584px;
             height: 44px;
             padding: 0 16px;
             border: 1px solid #dfe1e5;
@@ -52,37 +51,38 @@
             background-color: #f1f3f4;
             border-color: #f1f3f4;
         }
-        #chatbot-wrapper {
+        .results-container {
             display: none;
             width: 100%;
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-        }
-        #chatbot {
-            width: 100%;
             max-width: 600px;
-            height: 500px;
+            margin-top: 20px;
             border: 1px solid #dfe1e5;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: 8px;
+            background-color: white;
+        }
+        .results-container .result {
+            border-bottom: 1px solid #dfe1e5;
+            padding: 8px 0;
+        }
+        .results-container .result:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
 <body>
-    <div class="google-wrapper">
-        <div class="google-logo">
-            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
+    <div class="google-logo">
+        <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
+    </div>
+    <div class="search-container">
+        <input type="text" id="search-bar" class="search-bar" placeholder="Google 검색 또는 URL 입력">
+        <div class="search-buttons">
+            <button id="search-button" class="search-button">Google 검색</button>
+            <button class="search-button">I'm Feeling Lucky</button>
         </div>
-        <div class="search-container">
-            <input type="text" id="search-bar" class="search-bar" placeholder="Google 검색 또는 URL 입력">
-            <div class="search-buttons">
-                <button id="search-button" class="search-button">Google 검색</button>
-                <button class="search-button">I'm Feeling Lucky</button>
-            </div>
-            <div id="chatbot-wrapper">
-                <iframe id="chatbot"></iframe>
-            </div>
-        </div>
+    </div>
+    <div id="results-container" class="results-container">
+        <!-- 챗봇 결과가 이곳에 표시됩니다. -->
     </div>
 
     <script id="58HvPbwaoyWFuntQ">
@@ -94,21 +94,39 @@
      baseUrl: 'https://aionu.edu-tech.io',
     }
     </script>
-    <script
-     src="https://aionu.edu-tech.io/embed_div.min.js"
-     defer>
-    </script>
+    <script src="https://aionu.edu-tech.io/embed_div.min.js" defer></script>
     <script>
         const searchBar = document.getElementById('search-bar');
         const searchButton = document.getElementById('search-button');
-        const chatbotWrapper = document.getElementById('chatbot-wrapper');
-        const chatbot = document.getElementById('chatbot');
+        const resultsContainer = document.getElementById('results-container');
 
         function showChatbot() {
             const query = searchBar.value.trim();
             if (query) {
-                chatbotWrapper.style.display = 'block';
-                window.aionChatbotConfigFunction.openEmbedChatbot('58HvPbwaoyWFuntQ');
+                resultsContainer.style.display = 'block';
+
+                // 기존 챗봇 오픈 함수 호출 대신 결과를 직접 넣기
+                fetch('https://aionu.edu-tech.io/chatbot_response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer 58HvPbwaoyWFuntQ`
+                    },
+                    body: JSON.stringify({ query: query })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // 챗봇 결과를 파싱하여 results-container에 추가
+                    data.results.forEach(result => {
+                        const resultDiv = document.createElement('div');
+                        resultDiv.classList.add('result');
+                        resultDiv.textContent = result.text;
+                        resultsContainer.appendChild(resultDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             }
         }
 
