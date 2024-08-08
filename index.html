@@ -8,11 +8,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            text-align: center;
             padding-top: 100px;
-            margin: 0;
         }
         .google-logo img {
             width: 272px;
@@ -21,9 +18,7 @@
         .search-container {
             width: 100%;
             max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin: 0 auto;
         }
         .search-bar {
             width: 100%;
@@ -37,6 +32,7 @@
         }
         .search-buttons {
             margin-top: 20px;
+            text-align: center;
         }
         .search-button {
             padding: 10px 20px;
@@ -54,18 +50,15 @@
         .results-container {
             display: none;
             width: 100%;
-            max-width: 600px;
-            margin-top: 20px;
-            border: 1px solid #dfe1e5;
-            padding: 16px;
-            border-radius: 8px;
-            background-color: white;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 16px;
         }
-        .results-container .result {
+        .result {
             border-bottom: 1px solid #dfe1e5;
-            padding: 8px 0;
+            padding: 12px 0;
         }
-        .results-container .result:last-child {
+        .result:last-child {
             border-bottom: none;
         }
     </style>
@@ -86,12 +79,12 @@
     </div>
 
     <script id="58HvPbwaoyWFuntQ">
-    if( !window.aionChatbotConfig ) {
+    if (!window.aionChatbotConfig) {
         window.aionChatbotConfig = new Array()
     }
-    window.aionChatbotConfig['58HvPbwaoyWFuntQ'] = { 
-     token: '58HvPbwaoyWFuntQ', 
-     baseUrl: 'https://aionu.edu-tech.io',
+    window.aionChatbotConfig['58HvPbwaoyWFuntQ'] = {
+        token: '58HvPbwaoyWFuntQ',
+        baseUrl: 'https://aionu.edu-tech.io',
     }
     </script>
     <script src="https://aionu.edu-tech.io/embed_div.min.js" defer></script>
@@ -100,29 +93,38 @@
         const searchButton = document.getElementById('search-button');
         const resultsContainer = document.getElementById('results-container');
 
-        function showChatbot() {
+        function showChatbotResults() {
             const query = searchBar.value.trim();
             if (query) {
+                // Display the results container
                 resultsContainer.style.display = 'block';
+                resultsContainer.innerHTML = ''; // Clear previous results
 
-                // 기존 챗봇 오픈 함수 호출 대신 결과를 직접 넣기
-                fetch('https://aionu.edu-tech.io/chatbot_response', {
+                // Fetch chatbot results
+                fetch(`${window.aionChatbotConfig['58HvPbwaoyWFuntQ'].baseUrl}/chatbot_response`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer 58HvPbwaoyWFuntQ`
+                        'Authorization': `Bearer ${window.aionChatbotConfig['58HvPbwaoyWFuntQ'].token}`
                     },
                     body: JSON.stringify({ query: query })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // 챗봇 결과를 파싱하여 results-container에 추가
-                    data.results.forEach(result => {
-                        const resultDiv = document.createElement('div');
-                        resultDiv.classList.add('result');
-                        resultDiv.textContent = result.text;
-                        resultsContainer.appendChild(resultDiv);
-                    });
+                    // Display chatbot results
+                    if (data.results) {
+                        data.results.forEach(result => {
+                            const resultDiv = document.createElement('div');
+                            resultDiv.classList.add('result');
+                            resultDiv.textContent = result.text;
+                            resultsContainer.appendChild(resultDiv);
+                        });
+                    } else {
+                        const noResultDiv = document.createElement('div');
+                        noResultDiv.classList.add('result');
+                        noResultDiv.textContent = "No results found.";
+                        resultsContainer.appendChild(noResultDiv);
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -132,11 +134,11 @@
 
         searchBar.addEventListener('keyup', function(event) {
             if (event.key === 'Enter') {
-                showChatbot();
+                showChatbotResults();
             }
         });
 
-        searchButton.addEventListener('click', showChatbot);
+        searchButton.addEventListener('click', showChatbotResults);
     </script>
 </body>
 </html>
