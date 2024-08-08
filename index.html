@@ -78,16 +78,22 @@
         <!-- 챗봇 결과가 이곳에 표시됩니다. -->
     </div>
 
+    <!-- 챗봇 스크립트 추가 -->
     <script id="58HvPbwaoyWFuntQ">
-    if (!window.aionChatbotConfig) {
-        window.aionChatbotConfig = new Array()
+    if( !window.aionChatbotConfig ) {
+        window.aionChatbotConfig = []
     }
-    window.aionChatbotConfig['58HvPbwaoyWFuntQ'] = {
-        token: '58HvPbwaoyWFuntQ',
-        baseUrl: 'https://aionu.edu-tech.io',
+    window.aionChatbotConfig['58HvPbwaoyWFuntQ'] = { 
+     token: '58HvPbwaoyWFuntQ', 
+     baseUrl: 'https://aionu.edu-tech.io',
     }
     </script>
-    <script src="https://aionu.edu-tech.io/embed_div.min.js" defer></script>
+    <script
+     src="https://aionu.edu-tech.io/embed_div.min.js"
+     onload="window.aionChatbotConfigFunction.openEmbedChatbot('58HvPbwaoyWFuntQ')"
+     defer>
+    </script>
+
     <script>
         const searchBar = document.getElementById('search-bar');
         const searchButton = document.getElementById('search-button');
@@ -100,7 +106,7 @@
                 resultsContainer.style.display = 'block';
                 resultsContainer.innerHTML = ''; // Clear previous results
 
-                // Fetch chatbot results
+                // 임베디드된 챗봇을 통해 결과를 얻음
                 fetch(`${window.aionChatbotConfig['58HvPbwaoyWFuntQ'].baseUrl}/chatbot_response`, {
                     method: 'POST',
                     headers: {
