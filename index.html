@@ -4,145 +4,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나의 IT 블로그</title>
-    <script>
-        window.aionChatbotConfig = {
-            token: 'SbXSggBZEt0OxYOr',
-            baseUrl: 'https://aionu.edu-tech.io'
-        }
-    </script>
-    <script src="https://aionu.edu-tech.io/embed.min.js" id="SbXSggBZEt0OxYOr" defer=""></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <title>Google</title>
     <style>
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        .navbar {
-            width: 100%;
-            background-color: #2db400;
-            padding: 1rem 2rem;
+            font-family: Arial, sans-serif;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            position: fixed;
-            top: 0;
-            z-index: 1000;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
-
-        .navbar .logo {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
+        .google-logo img {
+            width: 272px;
+            height: 92px;
         }
-
-        .navbar .nav-links {
+        .search-container {
+            width: 50%;
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            align-items: center;
         }
-
-        .navbar .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
+        .search-bar {
+            width: 100%;
+            max-width: 584px;
+            height: 44px;
+            padding: 0 16px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            box-shadow: none;
+            font-size: 16px;
+            outline: none;
         }
-
-        .container {
+        .search-buttons {
+            margin-top: 20px;
+        }
+        .search-button {
+            padding: 10px 20px;
+            margin: 0 4px;
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #f1f3f4;
+            border-color: #f1f3f4;
+        }
+        #chatbot-wrapper {
+            display: none;
+            width: 100%;
+            margin-top: 20px;
             display: flex;
-            flex-wrap: wrap;
-            margin-top: 80px; /* for fixed navbar */
-            padding: 20px;
+            justify-content: center;
         }
-
-        .sidebar {
-            flex: 1;
-            min-width: 200px;
-            max-width: 300px;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-right: 20px;
-        }
-
-        .content {
-            flex: 3;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 0 auto;
-            max-width: 800px;
-        }
-
-        .content h1 {
-            color: #2db400;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .content p {
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .sidebar h2 {
-            color: #2db400;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 10px;
-        }
-
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #333;
-        }
-
-        .sidebar ul li a:hover {
-            text-decoration: underline;
-            color: #2db400;
+        #chatbot {
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            border: 1px solid #dfe1e5;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo">나의 IT 블로그</div>
-        <div class="nav-links">
-            <a href="#">홈</a>
-            <a href="#">소개</a>
-            <a href="#">연락처</a>
+    <div class="google-wrapper">
+        <div class="google-logo">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-bar" class="search-bar" placeholder="Google 검색 또는 URL 입력">
+            <div class="search-buttons">
+                <button id="search-button" class="search-button">Google 검색</button>
+                <button class="search-button">I'm Feeling Lucky</button>
+            </div>
+            <div id="chatbot-wrapper">
+                <iframe id="chatbot"></iframe>
+            </div>
         </div>
     </div>
-    <div class="container">
-        <div class="sidebar">
-            <h2>카테고리</h2>
-            <ul>
-                <li><a href="#">프로그래밍</a></li>
-                <li><a href="#">웹 개발</a></li>
-                <li><a href="#">모바일 앱</a></li>
-                <li><a href="#">인공지능 및 머신러닝</a></li>
-                <li><a href="#">기술 뉴스</a></li>
-            </ul>
-        </div>
-        <div class="content">
-            <h1>웹 개발 입문</h1>
-            <p>웹 개발은 인트라넷이나 인터넷을 통해 웹사이트를 호스팅하기 위해 수행되는 작업을 포괄적으로 말합니다. 이 과정에는 웹 디자인, 웹 콘텐츠 개발, 클라이언트/서버 사이드 스크립팅 및 네트워크 보안 설정 등의 다양한 작업이 포함됩니다.</p>
-            <p>웹 개발은 때때로 웹사이트 개발로도 알려져 있으며, 웹사이트를 유지 관리하는 전문가를 웹 개발자 또는 웹 데브라고 부릅니다.</p>
 
-            <h1>인공지능 이해하기</h1>
-            <p>인공지능(AI)은 기계가 인간 또는 동물의 자연 지능과 대조되는 지능을 나타내는 것을 말합니다. 주요 AI 교과서는 이 분야를 "지능형 에이전트 연구"로 정의합니다. 지능형 에이전트는 환경을 인식하고 성공적으로 목표를 달성할 수 있는 행동을 취합니다.</p>
-            <p>일상적으로 "인공지능"이라는 용어는 종종 인간의 마음과 연관된 인지 기능을 모방하는 기계(컴퓨터)를 설명하는 데 사용됩니다. 예를 들어 "학습"과 "문제 해결" 기능을 언급합니다.</p>
-        </div>
-    </div>
+    <script id="58HvPbwaoyWFuntQ">
+    if( !window.aionChatbotConfig ) {
+        window.aionChatbotConfig = new Array()
+    }
+    window.aionChatbotConfig['58HvPbwaoyWFuntQ'] = { 
+     token: '58HvPbwaoyWFuntQ', 
+     baseUrl: 'https://aionu.edu-tech.io',
+    }
+    </script>
+    <script
+     src="https://aionu.edu-tech.io/embed_div.min.js"
+     defer>
+    </script>
+    <script>
+        const searchBar = document.getElementById('search-bar');
+        const searchButton = document.getElementById('search-button');
+        const chatbotWrapper = document.getElementById('chatbot-wrapper');
+        const chatbot = document.getElementById('chatbot');
+
+        function showChatbot() {
+            const query = searchBar.value.trim();
+            if (query) {
+                chatbotWrapper.style.display = 'block';
+                window.aionChatbotConfigFunction.openEmbedChatbot('58HvPbwaoyWFuntQ');
+            }
+        }
+
+        searchBar.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                showChatbot();
+            }
+        });
+
+        searchButton.addEventListener('click', showChatbot);
+    </script>
 </body>
-</html> 
+</html>
