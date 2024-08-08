@@ -4,31 +4,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API 데이터 검색</title>
+    <title>Google 검색</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
         }
-        input, button {
-            margin: 5px 0;
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            width: 272px;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .search-bar input {
+            width: 80%;
             padding: 10px;
-            font-size: 16px;
+            font-size: 18px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            outline: none;
+            box-shadow: none;
+        }
+        .search-bar input:focus {
+            border: 1px solid #4285f4;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 24px;
+            background-color: #4285f4;
+            color: white;
+            cursor: pointer;
+            outline: none;
         }
         #result {
             margin-top: 20px;
             padding: 10px;
             background-color: #fff;
             border: 1px solid #ddd;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
-    <h1>API 데이터 검색</h1>
-    <input type="text" id="searchQuery" placeholder="검색어를 입력하세요">
-    <button onclick="search()">Google 검색</button>
-    <div id="result"></div>
+    <div class="container">
+        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google 로고" class="logo">
+        <div class="search-bar">
+            <input type="text" id="searchQuery" placeholder="Google 검색 또는 URL 입력" onkeypress="handleKeyPress(event)">
+            <button onclick="search()">Google 검색</button>
+        </div>
+        <div id="result"></div>
+    </div>
 
     <script>
         async function fetchDataFromAPI(question) {
@@ -63,6 +105,12 @@
             } catch (error) {
                 console.error("API 호출 오류: ", error);
                 return null;
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                search();
             }
         }
 
