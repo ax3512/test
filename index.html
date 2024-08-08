@@ -4,173 +4,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google 검색</title>
+    <title>Google</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            text-align: center;
+            padding-top: 15%;
+            background-color: #fff;
             margin: 0;
-            padding: 0;
-            background-color: #f2f2f2;
         }
-        .container {
+        .google-logo img {
+            width: 272px;
+            height: auto;
+        }
+        .search-container {
             width: 100%;
             max-width: 584px;
-            text-align: center;
-            margin-top: 100px;
-        }
-        .logo {
-            max-width: 272px;
+            margin: 0 auto;
         }
         .search-bar {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            height: 44px;
-        }
-        .search-bar input {
             width: 100%;
-            max-width: 484px;
-            padding: 0 14px;
-            font-size: 18px;
+            height: 44px;
+            margin-bottom: 20px;
+            padding: 0 16px;
             border: 1px solid #dfe1e5;
-            border-radius: 24px 0 0 24px;
-            outline: none;
+            border-radius: 24px;
             box-shadow: none;
-        }
-        .search-bar input:focus {
-            border: 1px solid #4285f4;
-        }
-        .search-bar button {
-            padding: 0 18px;
-            font-size: 14px;
-            border: none;
-            border-radius: 0 24px 24px 0;
-            background-color: #4285f4;
-            color: white;
-            cursor: pointer;
+            font-size: 16px;
             outline: none;
         }
-        .search-bar button:hover {
-            background-color: #357ae8;
+        .search-buttons {
+            text-align: center;
+        }
+        .search-button {
+            padding: 10px 20px;
+            margin: 4px;
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #f1f3f4;
+            border-color: #f1f3f4;
         }
         .results-container {
+            display: none;
             width: 100%;
-            max-width: 600px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-top: 20px;
-            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 16px;
         }
-        .article {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
+        .result {
+            border-bottom: 1px solid #dfe1e5;
+            padding: 12px 0;
         }
-        .article:last-child {
+        .result:last-child {
             border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        .article h3 {
-            margin: 0;
-            font-size: 18px;
-            color: #1a0dab;
-        }
-        .article p {
-            margin: 10px 0 0 0;
-            color: #4d5156;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google 로고" class="logo">
-        <div class="search-bar">
-            <input type="text" id="searchQuery" placeholder="Google 검색" onkeypress="handleKeyPress(event)">
-            <button onclick="search()">Google 검색</button>
+    <div class="google-logo">
+        <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
+    </div>
+    <div class="search-container">
+        <input type="text" id="search-bar" class="search-bar" placeholder="Google 검색 또는 URL 입력">
+        <div class="search-buttons">
+            <button id="search-button" class="search-button">Google 검색</button>
+            <button class="search-button">I'm Feeling Lucky</button>
         </div>
-        <div id="result" class="results-container"></div>
+    </div>
+    <div id="results-container" class="results-container">
+        <!-- 챗봇 결과가 이곳에 표시됩니다. -->
     </div>
 
-    <script>
-        async function fetchDataFromAPI(question) {
-            const url = 'https://api.aionu.edu-tech.io/v1/chat-messages';
-            const headers = {
-                'Authorization': 'Bearer app-JQJNXqQ1jgIzxiLk1YjnulmO',
-                'Content-Type': 'application/json'
-            };
-            const data = {
-                "inputs": {},
-                "query": question,
-                "response_mode": "blocking",
-                "conversation_id": "",
-                "user": "sung-kyu.lee@kt.com"
-            };
+    <!-- 챗봇 스크립트 추가 -->
+    <script id="58HvPbwaoyWFuntQ">
+    if (!window.aionChatbotConfig) {
+        window.aionChatbotConfig = [];
+    }
+    window.aionChatbotConfig['58HvPbwaoyWFuntQ'] = { 
+        token: '58HvPbwaoyWFuntQ', 
+        baseUrl: 'https://aionu.edu-tech.io',
+    }
+    </script>
+    <script
+     src="https://aionu.edu-tech.io/embed_div.min.js"
+     defer>
+    </script>
 
-            try {
-                const response = await fetch(url, {
+    <script>
+        const searchBar = document.getElementById('search-bar');
+        const searchButton = document.getElementById('search-button');
+        const resultsContainer = document.getElementById('results-container');
+
+        function showChatbotResults() {
+            const query = searchBar.value.trim();
+            if (query) {
+                // Display the results container
+                resultsContainer.style.display = 'block';
+                resultsContainer.innerHTML = ''; // Clear previous results
+
+                // 챗봇 API로 질문을 던져 결과를 얻음
+                fetch(`${window.aionChatbotConfig['58HvPbwaoyWFuntQ'].baseUrl}/chatbot_response`, {
                     method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(data)
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${window.aionChatbotConfig['58HvPbwaoyWFuntQ'].token}`
+                    },
+                    body: JSON.stringify({ query: query })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Display chatbot results
+                    if (data.results) {
+                        data.results.forEach(result => {
+                            const resultDiv = document.createElement('div');
+                            resultDiv.classList.add('result');
+                            resultDiv.textContent = result.text;
+                            resultsContainer.appendChild(resultDiv);
+                        });
+                    } else {
+                        const noResultDiv = document.createElement('div');
+                        noResultDiv.classList.add('result');
+                        noResultDiv.textContent = "No results found.";
+                        resultsContainer.appendChild(noResultDiv);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
 
-                if (response.status === 200) {
-                    const content = await response.json();
-                    console.log("API 호출 성공: ", content);
-                    return content;
-                } else {
-                    console.log("API 호출 실패, 상태 코드: ", response.status);
-                    return null;
-                }
-            } catch (error) {
-                console.error("API 호출 오류: ", error);
-                return null;
+                // 임베디드된 챗봇 열기
+                window.aionChatbotConfigFunction.openEmbedChatbot('58HvPbwaoyWFuntQ');
             }
         }
 
-        function handleKeyPress(event) {
+        searchBar.addEventListener('keyup', function(event) {
             if (event.key === 'Enter') {
-                search();
+                showChatbotResults();
             }
-        }
+        });
 
-        async function search() {
-            const query = document.getElementById('searchQuery').value;
-            if (!query) {
-                alert("검색어를 입력하세요.");
-                return;
-            }
-
-            const data = await fetchDataFromAPI(query);
-            const resultContainer = document.getElementById('result');
-            resultContainer.innerHTML = '';
-
-            if (data && data.answers) {  // 데이터 내에 'answers' 항목이 있다고 가정
-                // data.answers에서 답변을 추출하여 렌더링
-                renderAnswers(data.answers);
-            } else {
-                resultContainer.innerText = "검색 결과를 불러오는 데 실패했습니다.";
-            }
-        }
-
-        function renderAnswers(answers) {
-            const resultContainer = document.getElementById('result');
-
-            answers.forEach(answer => {
-                const articleElement = document.createElement('div');
-                articleElement.className = 'article';
-
-                const contentElement = document.createElement('p');
-                contentElement.innerText = answer; // 단순히 답변 텍스트를 출력
-
-                articleElement.appendChild(contentElement);
-                resultContainer.appendChild(articleElement);
-            });
-        }
+        searchButton.addEventListener('click', showChatbotResults);
     </script>
 </body>
 </html>
