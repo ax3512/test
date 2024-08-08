@@ -1,3 +1,6 @@
+당연히 도와드리겠습니다. 일반적으로 "구글 페이지" 스타일의 UI는 깔끔하고 간결한 디자인, 많이 사용되는 색상 구성 (예: 화이트와 블루), 네비게이션 바, 검색 창 등이 포함됩니다. 다음은 구글 페이지처럼 보이도록 디자인을 적용한 HTML 예제입니다:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +14,108 @@
         }
     </script>
     <script src="https://aionu.edu-tech.io/embed.min.js" id="SbXSggBZEt0OxYOr" defer=""></script>
+    <style>
+        body {
+            font-family: 'Arial, sans-serif';
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #4285F4;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+        }
+
+        .navbar .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #4285F4;
+            margin-bottom: 1rem;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar input {
+            width: 300px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #4285F4;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: 2px solid #4285F4;
+            border-left: none;
+            background-color: #4285F4;
+            color: white;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>My GitHub Page with JavaScript</h1>
+    <div class="navbar">
+        <div class="logo">My GitHub Page</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Welcome to My GitHub Page</h1>
+        <div class="search-bar">
+            <input type="text" placeholder="Search the web">
+            <button>Search</button>
+        </div>
+    </div>
 </body>
 </html>
+```
+
+이 디자인은 Google 페이지의 특징을 반영한 간단한 스타일을 적용합니다. 주요 구성요소는 다음과 같습니다:
+- 네비게이션 바: 화면 상단에 고정되며, "로고"와 네비게이션 링크를 포함합니다.
+- 검색 입력: 사용자가 웹을 검색할 수 있는 입력 필드와 버튼.
+- 전체적인 스타일: Google의 색상 테마(흰색, 파란색)를 사용하고 다양한 요소를 중앙 정렬하여 깔끔한 느낌을 줍니다.
+
+이 코드를 통해 깔끔하고 직관적이며, Google의 디자인 스타일에 영감을 받은 웹 페이지를 얻을 수 있습니다. 필요에 따라 더 많은 요소와 스타일을 추가하여 페이지를 개선할 수도 있습니다.
