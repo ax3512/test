@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
+        .logo {
+            margin-top: 50px;
+        }
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .search-box {
+            display: flex;
+            width: 584px;
+            height: 44px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            padding: 0 14px;
+            box-shadow: none;
+            transition: box-shadow 0.2s;
+            background-color: #fff;
+        }
+        .search-box:hover, .search-box:focus-within {
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            border-color: rgba(223, 225, 229, 0);
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            font-size: 14px;
+            color: #5f6368;
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            height: 36px;
+            padding: 0 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            border: 1px solid #dadce0;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+        .results {
+            width: 60%;
+            margin: 20px 0;
+        }
+        .result-item {
+            margin: 20px 0;
+        }
+        .result-item a {
+            font-size: 18px;
+            color: #1a0dab;
+            text-decoration: none;
+        }
+        .result-item a:hover {
+            text-decoration: underline;
+        }
+        .result-item .url {
+            font-size: 14px;
+            color: #006621;
+        }
+        .result-item .description {
+            font-size: 14px;
+            color: #545454;
+        }
+        .footer {
+            width: 100%;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 20px 0;
+            box-sizing: border-box;
+            position: absolute;
+            bottom: 0;
+        }
+        .footer a {
+            color: #5f6368;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 15px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .chatbot-container {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            padding: 14px;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            background-color: #fff;
+            display: none;
+            margin-top: 20px;
+        }
+        .chatbot-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo">
+    </div>
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" placeholder="Google 검색 또는 URL 입력">
+        </div>
+        <div class="buttons">
+            <button class="btn" onclick="toggleChatbot()">Google 검색</button>
+            <button class="btn">I'm Feeling Lucky</button>
+        </div>
+    </div>
+    <div class="results">
+        <div class="result-item">
+            <div>
+                <a href="https://google.com">Example Domain</a>
+                <div class="url">https://example.com/</div>
+                <div class="description">
+                    This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission. However, it is important to be aware that using example domains in real projects could lead to unexpected issues and should be avoided.
+                </div>
+            </div>
+        </div>
+        <div class="result-item">
+            <div>
+                <a href="https://www.iana.org/domains/example">IANA — Example domains</a>
+                <div class="url">https://www.iana.org/domains/example</div>
+                <div class="description">
+                    Example domains maintained by IANA. These domains are established for use in documentation and are not available for registration. They serve as placeholders in technical documentation and are reserved to avoid confusion.
+                </div>
+            </div>
+        </div>
+        <div class="result-item">
+            <div>
+                <a href="https://www.csoonline.com/article/3153707/top-cybersecurity-trends.html">Latest Trends in Cybersecurity</a>
+                <div class="url">https://www.csoonline.com/article/3153707/top-cybersecurity-trends.html</div>
+                <div class="description">
+                    As cyber threats continue to evolve, staying informed about the latest trends in cybersecurity is crucial. This year has seen a significant increase in ransomware attacks targeting both individuals and large organizations. Cybersecurity experts recommend adopting a multi-layered security approach that includes regular software updates, employee training, and the implementation of advanced threat detection systems. Furthermore, the rise of remote work has introduced new vulnerabilities, making it essential for companies to secure remote access solutions and provide employees with the necessary tools to protect their home networks.
+                </div>
+            </div>
+        </div>
+        <div class="result-item">
+            <div>
+                <a href="https://www.privacyshield.gov/article?id=Overview-of-Personal-Data-Protection">Data Privacy Regulations and Compliance</a>
+                <div class="url">https://www.privacyshield.gov/article?id=Overview-of-Personal-Data-Protection</div>
+                <div class="description">
+                    Data privacy has become a top priority for organizations worldwide. With the introduction of regulations like the GDPR and CCPA, companies are required to implement stringent measures to protect personal data. Compliance with these regulations not only helps in avoiding hefty fines but also builds trust with customers. Key strategies for ensuring data privacy include conducting regular audits, encrypting sensitive information, and ensuring that data is collected and processed transparently. Companies must also stay updated with evolving regulations and adapt their privacy policies accordingly.
+                </div>
+            </div>
+        </div>
+        <div class="result-item">
+            <div>
+                <a href="https://www.iotforall.com/iot-security-issues-solutions">Securing the Internet of Things (IoT)</a>
+                <div class="url">https://www.iotforall.com/iot-security-issues-solutions</div>
+                <div class="description">
+                    The Internet of Things (IoT) has revolutionized how we interact with technology, but it has also introduced new security challenges. IoT devices, ranging from smart home appliances to industrial sensors, often lack robust security features, making them prime targets for cyberattacks. To secure IoT ecosystems, experts recommend adopting security-by-design principles, ensuring regular firmware updates, and segmenting IoT networks from critical infrastructure. Additionally, educating consumers about the importance of securing their IoT devices and using strong, unique passwords for each device can significantly reduce the risk of cyber threats.
+                </div>
+            </div>
+        </div>
+        <div id="chatbot-container" class="chatbot-container">
+            <iframe class="chatbot-iframe" src="https://aionu.edu-tech.io/chat/ldEyTePQo8uUmnu7"></iframe>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="#">광고</a>
+        <a href="#">비즈니스</a>
+        <a href="#">검색의 원리</a>
+        <a href="#">개인정보처리방침</a>
+        <a href="#">약관</a>
+        <a href="#">설정</a>
+    </div>
+
+    <script>
+        function toggleChatbot() {
+            const chatbotContainer = document.getElementById('chatbot-container');
+            if (chatbotContainer.style.display === 'none' || chatbotContainer.style.display === '') {
+                chatbotContainer.style.display = 'block';
+            } else {
+                chatbotContainer.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
