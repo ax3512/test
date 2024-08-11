@@ -1,1 +1,390 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+        .header .left, .header .right {
+            display: flex;
+            align-items: center;
+        }
+        .header .left a, .header .right a {
+            text-decoration: none;
+            color: #5f6368;
+            font-size: 14px;
+            margin-right: 20px;
+        }
+        .header .right .login-btn {
+            background-color: #1a73e8;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .header .right .login-btn:hover {
+            background-color: #135abe;
+        }
+        .logo {
+            margin-top: 100px;
+        }
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .search-box {
+            display: flex;
+            width: 584px;
+            height: 44px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            padding: 0 14px;
+            box-shadow: none;
+            transition: box-shadow 0.2s;
+            background-color: #fff;
+        }
+        .search-box:hover, .search-box:focus-within {
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+            border-color: rgba(223, 225, 229, 0);
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            max-length: 1000;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            font-size: 14px;
+            color: #5f6368;
+            background-color: #f8f9fa;
+            border: 1px solid #f8f9fa;
+            border-radius: 4px;
+            height: 36px;
+            padding: 0 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            border: 1px solid #dadce0;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+        .results {
+            width: 60%; /* 너비를 60%로 설정하여 가운데에 배치 */
+            margin: 20px 20% 20px 20%; /* 좌우에 여백을 주어 가운데 정렬 */
+            max-width: 1200px; /* 최대 너비 설정 */
+            overflow-y: auto; /* 세로 스크롤 가능하게 설정 */
+            position: relative; /* 요소를 포지셔닝 가능하게 설정 */
+        }
+        .result-item {
+            margin: 20px 0;
+        }
+        .result-item a {
+            font-size: 18px;
+            color: #1a0dab;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .result-item a:hover {
+            text-decoration: underline;
+        }
+        .result-item .url {
+            font-size: 14px;
+            color: #006621;
+        }
+        .result-item .description {
+            font-size: 14px;
+            color: #545454;
+        }
+        .formatted-answer {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff; /* 흰색 배경 유지 */
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid #dfe1e5;
+            border-radius: 4px;
+            max-width: 100%; /* 부모 요소의 너비에 맞게 */
+            white-space: pre-wrap;
+            overflow-y: auto;
+            height: calc(100vh - 200px); /* 화면 높이에 맞게 조정 */
+        }
+        .formatted-answer::-webkit-scrollbar {
+            width: 12px;
+        }
+        .formatted-answer::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .formatted-answer::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 6px;
+        }
+        .formatted-answer::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        .formatted-answer p {
+            margin-bottom: 16px;
+        }
+        .footer {
+            width: 100%;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 20px 0;
+            box-sizing: border-box;
+            position: absolute;
+            bottom: 0;
+        }
+        .footer a {
+            color: #5f6368;
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 15px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="left">
+            <a href="#">Google 앱</a>
+        </div>
+        <div class="right">
+            <a href="#">이미지</a>
+            <a href="#" class="login-btn">로그인</a>
+        </div>
+    </div>
+    <div class="logo">
+        <img src="https://www.google.co.kr/logos/doodles/2024/paris-games-conclude-6753651837110568-law.gif" alt="Google Doodle">
+    </div>
+    <div class="search-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Google 검색 또는 URL 입력" maxlength="1000" onkeypress="handleKeyPress(event)">
+        </div>
+        <div class="buttons">
+            <button class="btn" onclick="performSearch()">Google 검색</button>
+            <button class="btn">I'm Feeling Lucky</button>
+        </div>
+    </div>
+    <div class="results" id="resultsContainer">
+        <!-- 검색 결과가 여기에 표시됩니다 -->
+    </div>
+    <div class="footer">
+        <a href="#">광고</a>
+        <a href="#">비즈니스</a>
+        <a href="#">검색의 원리</a>
+        <a href="#">개인정보처리방침</a>
+        <a href="#">약관</a>
+        <a href="#">설정</a>
+    </div>
 
+    <script>
+        async function fetch_data_from_api(question) {
+            const url = 'https://api.aionu.edu-tech.io/v1/chat-messages';
+            const headers = {
+                'Authorization': 'Bearer app-uLUHC5HPCpC6UkpqpJ8cIA01',
+                'Content-Type': 'application/json'
+            };
+            const data = {
+                "inputs": {},
+                "query": question,
+                "response_mode": "blocking",
+                "conversation_id": "",
+                "user": "sung-kyu.lee@kt.com"
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const content = await response.json();
+                console.log("API 호출 성공:", content);
+                return content;
+            } catch (error) {
+                console.error("API 호출 오류:", error.message);
+                alert("API 호출 중 오류가 발생했습니다. 네트워크를 확인하거나 나중에 다시 시도하십시오.");
+                return null;
+            }
+        }
+
+        async function performSearch() {
+            const searchInput = document.getElementById('searchInput').value;
+            const resultsContainer = document.getElementById('resultsContainer');
+
+            // 이전 검색 결과를 초기화
+            resultsContainer.innerHTML = '';
+
+            if (searchInput.trim() === '') {
+                alert('검색어를 입력하세요.');
+                return;
+            }
+
+            // API 호출
+            const result = await fetch_data_from_api(searchInput);
+
+            if (result && result.answer) {
+                // 메인 검색 결과 표시
+                const mainResultItem = document.createElement('div');
+                mainResultItem.className = 'result-item';
+
+                const mainResultLink = document.createElement('a');
+                mainResultLink.href = `#`;
+                mainResultLink.textContent = searchInput;
+                mainResultLink.onclick = function(event) {
+                    event.preventDefault(); // 페이지 새로고침 방지
+                    showAnswer(result.answer);
+                    downloadAnswerAsText(searchInput, result.answer);
+                };
+                mainResultItem.appendChild(mainResultLink);
+
+                const mainResultDescription = document.createElement('div');
+                mainResultDescription.className = 'description';
+                mainResultDescription.innerHTML = formatAnswer(result.answer); // HTML로 변환된 답변 사용
+                mainResultItem.appendChild(mainResultDescription);
+
+                resultsContainer.appendChild(mainResultItem);
+
+                // 추가 기사 표시
+                const articles = [
+                    {
+                        title: `${searchInput} 관련 장문의 기사 1`,
+                        description: `${searchInput}에 대한 첫 번째 장문의 기사 내용입니다. 이 기사는 상세한 정보를 포함하고 있으며 다양한 관점에서 주제를 다룹니다. 기사의 내용은 매우 길며, 독자가 필요한 모든 정보를 제공하는 것을 목표로 합니다. 이 기사에서는 특히 ${searchInput}의 역사적 배경, 현재 상황, 그리고 미래 전망에 대해 깊이 있는 분석을 제공합니다.`
+                    },
+                    {
+                        title: `${searchInput} 관련 장문의 기사 2`,
+                        description: `${searchInput}에 대한 두 번째 장문의 기사입니다. 이 기사에서는 ${searchInput}와 관련된 최신 트렌드와 기술적 진보에 대해 논의합니다. 상세한 데이터와 통계를 통해 ${searchInput}이 어떻게 발전하고 있는지 설명하며, 관련 업계 전문가들의 의견도 포함하고 있습니다. 기사의 마지막 부분에서는 ${searchInput}이 미래에 어떻게 영향을 미칠지에 대한 예측도 다루고 있습니다.`
+                    },
+                    {
+                        title: `${searchInput} 관련 장문의 기사 3`,
+                        description: `이 기사는 ${searchInput}의 사회적, 경제적 영향에 대해 다룹니다. ${searchInput}이 사람들의 생활에 어떤 변화를 가져왔는지, 그리고 앞으로 어떤 변화를 일으킬 수 있는지에 대해 깊이 있는 논의를 포함하고 있습니다. 또한, ${searchInput}과 관련된 정책 변화와 그에 따른 사회적 반응에 대한 분석도 포함하고 있습니다. 기사의 내용은 매우 풍부하며, 다양한 사례 연구와 인터뷰가 포함되어 있습니다.`
+                    },
+                    {
+                        title: `${searchInput} 관련 장문의 기사 4`,
+                        description: `네 번째 기사는 ${searchInput}의 기술적 측면을 중점적으로 다룹니다. 이 기사에서는 ${searchInput}의 기술적 원리, 그것이 작동하는 방법, 그리고 그것이 실생활에 어떻게 적용되는지를 설명합니다. 기술에 대한 깊이 있는 이해를 제공하며, ${searchInput}의 발전 가능성에 대해서도 논의합니다. 이 기사는 기술에 관심이 있는 독자들에게 특히 유용한 정보를 제공합니다.`
+                    },
+                    {
+                        title: `${searchInput} 관련 장문의 기사 5`,
+                        description: `마지막으로, 이 기사는 ${searchInput}의 글로벌 영향력에 대해 다룹니다. ${searchInput}이 전 세계적으로 어떤 영향을 미쳤는지, 그리고 각국의 반응과 전략에 대해 분석합니다. 또한, ${searchInput}의 글로벌 트렌드를 이해하기 위해 다양한 국가의 사례를 조사합니다. 이 기사는 ${searchInput}이 세계 경제와 정치에 미친 영향을 이해하는 데 필수적인 정보를 제공합니다.`
+                    }
+                ];
+
+                articles.forEach(article => {
+                    const articleItem = document.createElement('div');
+                    articleItem.className = 'result-item';
+
+                    const articleLink = document.createElement('a');
+                    articleLink.href = '#';
+                    articleLink.textContent = article.title;
+                    articleLink.onclick = function(event) {
+                        event.preventDefault(); // 페이지 새로고침 방지
+                    };
+                    articleItem.appendChild(articleLink);
+
+                    const articleDescription = document.createElement('div');
+                    articleDescription.className = 'description';
+                    articleDescription.textContent = article.description;
+                    articleItem.appendChild(articleDescription);
+
+                    resultsContainer.appendChild(articleItem);
+                });
+
+            } else {
+                // 오류 처리 (결과 없음)
+                const noResultItem = document.createElement('div');
+                noResultItem.className = 'result-item description';
+                noResultItem.textContent = "검색 결과를 찾을 수 없습니다.";
+                resultsContainer.appendChild(noResultItem);
+            }
+        }
+
+        // 답변 포맷을 마크다운 스타일로 변환하는 함수
+        function formatAnswer(answer) {
+            return answer
+                .replace(/^###\s(.+)/gm, '<h3>$1</h3>')      // 헤더 처리
+                .replace(/^##\s(.+)/gm, '<h2>$1</h2>')       // 헤더 처리
+                .replace(/^#\s(.+)/gm, '<h1>$1</h1>')        // 헤더 처리
+                .replace(/^- (.+)/gm, '<li>$1</li>')         // 리스트 아이템 처리
+                .replace(/(\d+)\. (.+)/gm, '<li>$1. $2</li>') // 번호 매긴 리스트 아이템 처리
+                .replace(/\*\*(.+)\*\*/gm, '<b>$1</b>')      // 굵은 글씨 처리
+                .replace(/\*(.+)\*/gm, '<i>$1</i>')          // 이탤릭체 처리
+                .replace(/\n/g, '<br>')                      // 줄바꿈 처리
+                .replace(/<li>/g, '<ul><li>').replace(/<\/li>/g, '</li></ul>') // 리스트를 <ul>로 감싸기
+                .replace(/<\/ul><ul>/g, '');                 // 중첩된 <ul> 태그 제거
+        }
+
+        function showAnswer(answer) {
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.innerHTML = ''; // 기존 내용을 제거
+
+            const answerItem = document.createElement('div');
+            answerItem.className = 'formatted-answer';
+
+            const paragraphs = formatAnswer(answer);
+            answerItem.innerHTML = paragraphs;
+
+            resultsContainer.appendChild(answerItem);
+        }
+
+        function downloadAnswerAsText(filename, text) {
+            const blob = new Blob([text], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `${filename}.txt`;
+
+            document.body.appendChild(link);
+            link.click();
+
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href); // 메모리 누수 방지
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                performSearch();
+            }
+        }
+    </script>
+</body>
+</html>
