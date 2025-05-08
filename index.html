@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Google</title>
     <style>
         body {
@@ -16,6 +16,8 @@
             background-color: #fff;
             min-height: 100vh;
             position: relative;
+            /* Added padding to ensure space for chatbot at bottom */
+            padding-bottom: 200px;
         }
         .logo {
             margin-top: 50px;
@@ -96,8 +98,10 @@
             text-align: center;
             padding: 20px 0;
             box-sizing: border-box;
-            position: absolute;
-            bottom: 0;
+            /* Changed from absolute to relative positioning */
+            position: relative;
+            bottom: auto;
+            margin-top: 50px;
         }
         .footer a {
             color: #5f6368;
@@ -108,21 +112,17 @@
         .footer a:hover {
             text-decoration: underline;
         }
-        .chatbot-container {
+        /* Added extra space at bottom of the page to ensure chatbot isn't cut off */
+        .footer {
             width: 100%;
-            height: 600px;
-            border: 1px solid #dfe1e5;
-            border-radius: 24px;
-            padding: 14px;
-            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
-            background-color: #fff;
-            display: none;
-            margin-top: 20px;
-        }
-        .chatbot-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 20px 0;
+            box-sizing: border-box;
+            /* Changed from absolute to relative positioning */
+            position: relative;
+            bottom: auto;
+            margin-top: 50px;
         }
     </style>
 </head>
@@ -151,7 +151,7 @@
         </div>
         <div class="result-item">
             <div>
-                <a href="https://www.iana.org/domains/example">IANA — Example domains</a>
+                <a href="https://www.iana.org/domains/example">IANA ? Example domains</a>
                 <div class="url">https://www.iana.org/domains/example</div>
                 <div class="description">
                     Example domains maintained by IANA. These domains are established for use in documentation and are not available for registration. They serve as placeholders in technical documentation and are reserved to avoid confusion.
@@ -185,10 +185,13 @@
                 </div>
             </div>
         </div>
-        <div id="chatbot-container" class="chatbot-container">
-            <iframe class="chatbot-iframe" src="https://aionu.edu-tech.io/chat/58HvPbwaoyWFuntQ"></iframe>
-        </div>
+        <!-- Completely removed the existing chatbot container -->
     </div>
+    <!-- Added a div specifically for the chatbot -->
+    <div id="aion-chatbot-container" style="position: fixed; bottom: 0; right: 0; width: 400px; height: 600px; z-index: 9999;">
+        <!-- The chatbot will be injected here -->
+    </div>
+
     <div class="footer">
         <a href="#">광고</a>
         <a href="#">비즈니스</a>
@@ -198,6 +201,7 @@
         <a href="#">설정</a>
     </div>
 
+<!-- Replaced with the provided chatbot script -->
 <script>
  window.aionChatbotConfig = { 
   token: 'kkPWXkj1GZxxQZsH', 
@@ -220,6 +224,15 @@
  src="https://studio.abclab.ktds.com/embed.min.js"
  id="kkPWXkj1GZxxQZsH"
  defer>
+</script>
+
+<script>
+function toggleChatbot() {
+    // Using the aionChatbot.openPopup function
+    if (window.aionChatbot && window.aionChatbot.openPopup) {
+        window.aionChatbot.openPopup();
+    }
+}
 </script>
 </body>
 </html>
