@@ -11,195 +11,218 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            background-color: #fff;
             min-height: 100vh;
-            position: relative;
-            /* Added padding to ensure space for chatbot at bottom */
-            padding-bottom: 200px;
+            background-color: #fff;
         }
+
+        header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 15px 30px;
+            font-size: 13px;
+        }
+
+        header a {
+            color: #5f6368;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        header a:hover {
+            text-decoration: underline;
+        }
+
+        header .apps-icon {
+            width: 24px;
+            height: 24px;
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 8h4V4H6v4zm0 6h4v-4H6v4zm0 6h4v-4H6v4zm6-12h4V4h-4v4zm0 6h4v-4h-4v4zm0 6h4v-4h-4v4zm6-12h4V4h-4v4zm0 6h4v-4h-4v4zm0 6h4v-4h-4v4z" fill="rgba(0,0,0,.54)"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            margin-left: 15px;
+        }
+
+        header .sign-in-btn {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 9px 23px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            padding-bottom: 100px; /* Adjust to prevent overlap with footer */
+        }
+
         .logo {
-            margin-top: 50px;
+            margin-bottom: 20px; /* Reduced margin from 50px */
         }
+
+        .logo img {
+            width: 272px; /* Standard Google logo width */
+            height: auto;
+        }
+
         .search-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 20px;
             width: 100%;
         }
+
         .search-box {
             display: flex;
+            align-items: center; /* Vertically align items in search box */
             width: 584px;
             height: 44px;
             border: 1px solid #dfe1e5;
             border-radius: 24px;
-            padding: 0 14px;
+            padding: 0 14px; /* Keep existing padding */
             box-shadow: none;
             transition: box-shadow 0.2s;
             background-color: #fff;
+            margin-bottom: 30px; /* Space between search bar and buttons */
         }
+
         .search-box:hover, .search-box:focus-within {
             box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
             border-color: rgba(223, 225, 229, 0);
         }
+
         .search-box input {
             flex: 1;
             border: none;
             outline: none;
             font-size: 16px;
+            padding-left: 10px; /* Add some padding for text */
         }
+
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="rgba(0,0,0,.54)" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-right: 8px; /* Space between icon and input */
+        }
+
         .buttons {
-            margin-top: 20px;
             display: flex;
             gap: 10px;
         }
+
         .btn {
             font-size: 14px;
-            color: #5f6368;
+            color: #3c4043; /* Updated text color */
             background-color: #f8f9fa;
             border: 1px solid #f8f9fa;
             border-radius: 4px;
             height: 36px;
             padding: 0 16px;
             cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s; /* Smooth transition */
         }
+
         .btn:hover {
             border: 1px solid #dadce0;
             box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            color: #202124; /* Darken text on hover */
         }
-        .results {
-            width: 60%;
-            margin: 20px 0;
-        }
-        .result-item {
-            margin: 20px 0;
-        }
-        .result-item a {
-            font-size: 18px;
-            color: #1a0dab;
-            text-decoration: none;
-        }
-        .result-item a:hover {
-            text-decoration: underline;
-        }
-        .result-item .url {
-            font-size: 14px;
-            color: #006621;
-        }
-        .result-item .description {
-            font-size: 14px;
-            color: #545454;
-        }
-        .footer {
+
+        footer { /* Changed .footer to footer */
             width: 100%;
             background-color: #f2f2f2;
-            text-align: center;
-            padding: 20px 0;
+            padding: 15px 30px; /* Consistent padding */
             box-sizing: border-box;
-            /* Changed from absolute to relative positioning */
-            position: relative;
-            bottom: auto;
-            margin-top: 50px;
-        }
-        .footer a {
-            color: #5f6368;
-            text-decoration: none;
+            position: fixed; /* Make footer stick to bottom */
+            bottom: 0;
+            left: 0;
             font-size: 14px;
-            margin: 0 15px;
+            color: #70757a; /* Google's footer text color */
+            border-top: 1px solid #e4e4e4; /* Subtle top border */
         }
-        .footer a:hover {
+
+        .footer-links {
+            display: flex;
+            justify-content: space-between; /* Space out link groups */
+        }
+
+        .footer-links-left a, .footer-links-right a {
+            color: #70757a;
+            text-decoration: none;
+            margin: 0 10px; /* Adjust margin */
+        }
+
+        .footer-links-left a:hover, .footer-links-right a:hover {
             text-decoration: underline;
         }
-        /* Added extra space at bottom of the page to ensure chatbot isn't cut off */
-        .footer {
-            width: 100%;
-            background-color: #f2f2f2;
-            text-align: center;
-            padding: 20px 0;
-            box-sizing: border-box;
-            /* Changed from absolute to relative positioning */
-            position: relative;
-            bottom: auto;
-            margin-top: 50px;
+
+        #aion-chatbot-container {
+            position: fixed;
+            bottom: 70px; /* Adjusted to be above the new fixed footer */
+            right: 20px; /* Consistent spacing */
+            width: 400px;
+            height: 600px;
+            z-index: 10000; /* Ensure it's above other elements */
         }
     </style>
 </head>
 <body>
-    <div class="logo">
-        <img src="https://www.google.co.kr/logos/doodles/2024/paris-games-conclude-6753651837110568-law.gif" alt="Google Logo">
-    </div>
-    <div class="search-container">
-        <div class="search-box">
-            <input type="text" placeholder="Google 검색 또는 URL 입력">
+    <header>
+        <a href="#">Gmail</a>
+        <a href="#">Images</a>
+        <div class="apps-icon" title="Google apps"></div>
+        <button class="sign-in-btn">Sign in</button>
+    </header>
+
+    <main>
+        <div class="logo">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google Logo">
         </div>
-        <div class="buttons">
-            <button class="btn" onclick="toggleChatbot()">Google 검색</button>
-            <button class="btn">I'm Feeling Lucky</button>
-        </div>
-    </div>
-    <div class="results">
-        <div class="result-item">
-            <div>
-                <a href="https://example.com">Example Domain</a>
-                <div class="url">https://example.com/</div>
-                <div class="description">
-                    This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission. However, it is important to be aware that using example domains in real projects could lead to unexpected issues and should be avoided.
-                </div>
+        <div class="search-container">
+            <div class="search-box">
+                <div class="search-icon"></div>
+                <input type="text" placeholder="Search Google or type a URL">
+            </div>
+            <div class="buttons">
+                <button class="btn" onclick="toggleChatbot()">Google Search</button>
+                <button class="btn">I'm Feeling Lucky</button>
             </div>
         </div>
-        <div class="result-item">
-            <div>
-                <a href="https://www.iana.org/domains/example">IANA ? Example domains</a>
-                <div class="url">https://www.iana.org/domains/example</div>
-                <div class="description">
-                    Example domains maintained by IANA. These domains are established for use in documentation and are not available for registration. They serve as placeholders in technical documentation and are reserved to avoid confusion.
-                </div>
-            </div>
-        </div>
-        <div class="result-item">
-            <div>
-                <a href="https://www.csoonline.com/article/3153707/top-cybersecurity-trends.html">Latest Trends in Cybersecurity</a>
-                <div class="url">https://www.csoonline.com/article/3153707/top-cybersecurity-trends.html</div>
-                <div class="description">
-                    As cyber threats continue to evolve, staying informed about the latest trends in cybersecurity is crucial. This year has seen a significant increase in ransomware attacks targeting both individuals and large organizations. Cybersecurity experts recommend adopting a multi-layered security approach that includes regular software updates, employee training, and the implementation of advanced threat detection systems. Furthermore, the rise of remote work has introduced new vulnerabilities, making it essential for companies to secure remote access solutions and provide employees with the necessary tools to protect their home networks.
-                </div>
-            </div>
-        </div>
-        <div class="result-item">
-            <div>
-                <a href="https://www.privacyshield.gov/article?id=Overview-of-Personal-Data-Protection">Data Privacy Regulations and Compliance</a>
-                <div class="url">https://www.privacyshield.gov/article?id=Overview-of-Personal-Data-Protection</div>
-                <div class="description">
-                    Data privacy has become a top priority for organizations worldwide. With the introduction of regulations like the GDPR and CCPA, companies are required to implement stringent measures to protect personal data. Compliance with these regulations not only helps in avoiding hefty fines but also builds trust with customers. Key strategies for ensuring data privacy include conducting regular audits, encrypting sensitive information, and ensuring that data is collected and processed transparently. Companies must also stay updated with evolving regulations and adapt their privacy policies accordingly.
-                </div>
-            </div>
-        </div>
-        <div class="result-item">
-            <div>
-                <a href="https://www.iotforall.com/iot-security-issues-solutions">Securing the Internet of Things (IoT)</a>
-                <div class="url">https://www.iotforall.com/iot-security-issues-solutions</div>
-                <div class="description">
-                    The Internet of Things (IoT) has revolutionized how we interact with technology, but it has also introduced new security challenges. IoT devices, ranging from smart home appliances to industrial sensors, often lack robust security features, making them prime targets for cyberattacks. To secure IoT ecosystems, experts recommend adopting security-by-design principles, ensuring regular firmware updates, and segmenting IoT networks from critical infrastructure. Additionally, educating consumers about the importance of securing their IoT devices and using strong, unique passwords for each device can significantly reduce the risk of cyber threats.
-                </div>
-            </div>
-        </div>
-        <!-- Completely removed the existing chatbot container -->
-    </div>
-    <!-- Added a div specifically for the chatbot -->
-    <div id="aion-chatbot-container" style="position: fixed; bottom: 0; right: 0; width: 400px; height: 600px; z-index: 9999;">
-        <!-- The chatbot will be injected here -->
+    </main>
+
+    <div id="aion-chatbot-container">
+        <!-- The chatbot will be injected here by AION script -->
     </div>
 
-    <div class="footer">
-        <a href="#">광고</a>
-        <a href="#">비즈니스</a>
-        <a href="#">검색의 원리</a>
-        <a href="#">개인정보처리방침</a>
-        <a href="#">약관</a>
-        <a href="#">설정</a>
-    </div>
+    <footer>
+        <div class="footer-links">
+            <div class="footer-links-left">
+                <a href="#">About</a>
+                <a href="#">Advertising</a>
+                <a href="#">Business</a>
+                <a href="#">How Search works</a>
+            </div>
+            <div class="footer-links-right">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Settings</a>
+            </div>
+        </div>
+    </footer>
 
 <!-- Replaced with the provided chatbot script -->
 <script>
